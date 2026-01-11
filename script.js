@@ -20,7 +20,7 @@ produtos.forEach(p => {
     const el = document.createElement('div');
     el.className = 'product-card';
     el.innerHTML = `
-        <div class="p-img"><img src="imagens/${p.img}" alt="${p.nome}" loading="lazy" width="400" height="300" onerror="this.src='https://placehold.co/400x300?text=${p.nome.replace(' ', '+')}'"></div>
+        <div class="p-img"><img src="imagens/${p.img}" alt="${p.nome}"></div>
         <div class="p-info">
             <div class="p-title">${p.nome}</div>
             <div class="qty-box">
