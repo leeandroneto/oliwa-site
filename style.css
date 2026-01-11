@@ -12,7 +12,7 @@
 /* --- RESET --- */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 140px; }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; }
 input, button { font-family: inherit; }
 
@@ -115,6 +115,10 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
     border-radius: 24px 24px 0 0; padding: 20px 20px 30px; z-index: 1000;
     transform: translateY(120%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+.app-cart::before {
+    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 5px; background: #E0E0E0; border-radius: 5px;
+}
 .app-cart.active { transform: translateY(0); }
 .progress-track { background: #EEE; height: 8px; border-radius: 4px; margin-bottom: 15px; overflow: hidden; }
 .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: 0.5s; }
@@ -190,7 +194,9 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
     .hero-img img { max-width: 80%; margin: 0 auto; }
     .features-grid, .faq-grid { grid-template-columns: 1fr; }
     .factory-section { flex-direction: column; text-align: center; }
-    .cart-row { flex-direction: column; align-items: stretch; text-align: center; gap: 15px; }
+    .cart-row { flex-direction: row; align-items: center; text-align: left; gap: 15px; }
+    .cart-status, .progress-track { display: none; } /* Remove redundância no mobile */
+    .app-cart { padding: 25px 20px 20px; }
     .btn-finish { max-width: 100%; }
     .logo { height: 60px; }
     

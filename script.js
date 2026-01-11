@@ -411,3 +411,29 @@ document.getElementById('checkoutModal').addEventListener('click', (e) => {
 document.getElementById('deliveryModal').addEventListener('click', (e) => {
     if(e.target.id === 'deliveryModal') closeDelivery();
 });
+
+// --- GESTO DE DESLIZAR PARA FECHAR (SWIPE DOWN) ---
+const cartBar = document.getElementById('cartBar');
+let touchStartY = 0;
+
+cartBar.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+}, {passive: true});
+
+cartBar.addEventListener('touchmove', (e) => {
+    const currentY = e.touches[0].clientY;
+    const diff = currentY - touchStartY;
+    if(diff > 0) { // Arrastando para baixo
+        cartBar.style.transform = `translateY(${diff}px)`;
+    }
+}, {passive: true});
+
+cartBar.addEventListener('touchend', (e) => {
+    const currentY = e.changedTouches[0].clientY;
+    if(currentY - touchStartY > 50) { // Se arrastou mais de 50px
+        cartBar.classList.remove('active'); // Esconde
+        cartBar.style.transform = ''; // Limpa o estilo inline para o CSS assumir
+    } else {
+        cartBar.style.transform = ''; // Volta para o lugar (efeito elástico)
+    }
+});
