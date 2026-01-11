@@ -1,15 +1,12 @@
 // --- DADOS ---
 const produtos = [
-    { id: 1, nome: "Casadinho Goiaba", img: "casadinho.webp", desc: "Clássico com goiabada." },
-    { id: 2, nome: "Sequilho de Nata", img: "sequilho-nata.webp", desc: "Derrete na boca." },
-    { id: 3, nome: "Beijinho de Freira", img: "beijinho-de-freira.webp", desc: "Suave e macio." },
-    { id: 4, nome: "Ninho", img: "ninho.webp", desc: "Sabor leite ninho." },
-    { id: 5, nome: "Rosca de Flocos", img: "rosca-flocos.webp", desc: "Baunilha com chocolate." },
-    { id: 6, nome: "Rosca de Nata", img: "rosca-nata.webp", desc: "Tradicional de minas." },
-    { id: 7, nome: "Rosca de Coco", img: "rosca-coco.webp", desc: "Crocante com coco." },
-    { id: 8, nome: "Bambolê Recheado", img: "bambole-recheado.webp", desc: "Recheio farto." },
-    { id: 9, nome: "Rosca Leite Cond.", img: "rosca-leite-condensado.webp", desc: "Doce na medida." },
-    { id: 10, nome: "Florzinha", img: "florzinha.webp", desc: "Pingado artesanal." }
+    { id: 1, nome: "Bambole Ninho", img: "bambole-ninho.webp" },
+    { id: 2, nome: "Casadinho Coco", img: "casadinho-coco.webp" },
+    { id: 3, nome: "Casadinho Nata", img: "casadinho-nata.webp" },
+    { id: 4, nome: "Flocos", img: "flocos.webp" },
+    { id: 5, nome: "Florzinha Leite Condensado", img: "florzinha-leite-condensado.webp" },
+    { id: 6, nome: "Florzinha Leite Condensado Recheada", img: "florzinha-leite-condensado-recheada.webp" },
+    { id: 7, nome: "Rosquinha Nata", img: "rosquinha-nata.webp" }
 ];
 
 const MINIMO = 5; 
