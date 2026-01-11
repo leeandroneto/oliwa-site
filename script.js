@@ -76,6 +76,10 @@ function updateCart() {
     
     document.getElementById('cxCount').innerText = total;
     document.getElementById('kgCount').innerText = total * 2;
+    
+    // Atualiza singular/plural da unidade abaixo do preço
+    if(document.getElementById('cxUnit')) document.getElementById('cxUnit').innerText = total === 1 ? 'caixa' : 'caixas';
+
     totalDisplay.innerText = `R$ ${(total * PRECO).toFixed(2).replace('.', ',')}`;
 
     // Atualiza Badge do Header
@@ -89,17 +93,21 @@ function updateCart() {
 
     if (total < MINIMO) {
         const missing = MINIMO - total;
-        statusText.innerText = `Faltam ${missing} caixas para o pedido mínimo`;
+        const suffix = missing === 1 ? 'caixa' : 'caixas';
+        const verb = missing === 1 ? 'Falta' : 'Faltam';
+        statusText.innerText = `${verb} ${missing} ${suffix} para o mínimo`;
         statusText.style.color = '#E65100';
         progress.style.backgroundColor = '#E65100';
         btn.className = 'btn-finish locked';
-        btn.innerHTML = `🔒 Faltam ${missing} cxs`;
+        btn.innerHTML = `${verb} ${missing} ${suffix}`;
+        btn.disabled = true;
     } else {
         statusText.innerText = `Pedido mínimo atingido!`;
         statusText.style.color = '#25D366';
         progress.style.backgroundColor = '#25D366';
         btn.className = 'btn-finish active';
-        btn.innerHTML = `🛒 Finalizar Pedido`;
+        btn.innerHTML = `Finalizar Pedido`;
+        btn.disabled = false;
     }
 }
 
@@ -155,10 +163,10 @@ function renderCartItems() {
     
     if(totalItens < MINIMO) {
         btnConfirm.style.opacity = '0.5';
-        btnConfirm.innerHTML = `🔒 Mínimo ${MINIMO} caixas`;
+        btnConfirm.innerHTML = `Mínimo ${MINIMO} caixas`;
     } else {
         btnConfirm.style.opacity = '1';
-        btnConfirm.innerHTML = `Confirmar e Endereço ➡️`;
+        btnConfirm.innerHTML = `Confirmar e Endereço`;
     }
 }
 

@@ -114,31 +114,32 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
     background: rgba(255, 255, 255, 0.95); 
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 -10px 30px rgba(0,0,0,0.08); border-top: 1px solid rgba(0,0,0,0.05);
-    border-radius: 20px 20px 0 0; padding: 15px 20px 25px; z-index: 1000;
+    border-radius: 16px 16px 0 0; padding: 0; z-index: 1000;
     transform: translateY(120%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden; /* Para a barra de progresso não vazar */
 }
 .app-cart::before {
     content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-    width: 50px; height: 5px; background: #E0E0E0; border-radius: 10px;
+    width: 40px; height: 4px; background: #E0E0E0; border-radius: 10px; z-index: 2;
 }
 .app-cart.active { transform: translateY(0); }
-.progress-track { background: #EEE; height: 8px; border-radius: 4px; margin-bottom: 15px; overflow: hidden; }
+.progress-track { background: #F0F0F0; height: 4px; width: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
 .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: 0.5s; }
-.cart-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.cart-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 20px 20px 30px; }
 .cart-status { font-size: 0.85rem; font-weight: bold; margin-bottom: 2px; display: block; }
 .cart-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); line-height: 1; letter-spacing: -0.5px; }
 .btn-finish { 
-    flex: 1; max-width: 400px; padding: 14px 20px; border-radius: 12px; border: none; 
-    font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; 
-    transition: transform 0.1s, box-shadow 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
+    flex: 1; max-width: 400px; padding: 16px 20px; border-radius: 8px; border: none; 
+    font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0; 
+    transition: background 0.2s; text-transform: none; letter-spacing: 0;
 }
 .btn-finish:active { transform: scale(0.96); }
-.btn-finish.locked { background: #F5F5F5; color: #BBB; cursor: not-allowed; box-shadow: none; }
+.btn-finish.locked { background: #E0E0E0; color: #999; cursor: not-allowed; box-shadow: none; }
 .btn-finish.active { 
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
-    color: white; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); 
+    background: #EA1D2C; /* Cor estilo iFood (Vermelho/Laranja forte) ou use var(--primary) */
+    background: var(--primary); /* Mantendo a identidade da marca, mas sólido */
+    color: white; box-shadow: none;
 }
-@keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);} 70% {box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);} 100% {box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);} }
 
 /* --- MODAL FORMULÁRIO (Novo com Grid) --- */
 .modal-overlay {
@@ -178,13 +179,13 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
 .btn-close-modal:hover { color: var(--primary); }
 
 .btn-modal {
-    width: 100%; padding: 16px; border-radius: 14px; border: none; 
-    font-weight: 700; font-size: 1.05rem; cursor: pointer; transition: transform 0.1s, opacity 0.2s;
+    width: 100%; padding: 18px; border-radius: 8px; border: none; 
+    font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.1s, opacity 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .btn-modal:active { transform: scale(0.98); }
-.btn-modal.primary { background: var(--primary); color: white; }
-.btn-modal.whatsapp { background: var(--whatsapp); color: white; }
+.btn-modal.primary { background: var(--primary); color: white; } /* Cor sólida */
+.btn-modal.whatsapp { background: #25D366; color: white; } /* Cor sólida */
 .btn-modal.secondary { background: #EEE; color: #555; }
 .btn-modal:hover { opacity: 0.95; }
 
@@ -204,9 +205,9 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
     .hero-img img { max-width: 80%; margin: 0 auto; }
     .features-grid, .faq-grid { grid-template-columns: 1fr; }
     .factory-section { flex-direction: column; text-align: center; }
-    .cart-row { flex-direction: row; align-items: center; text-align: left; gap: 15px; }
-    .cart-status, .progress-track { display: none; } /* Remove redundância no mobile */
-    .app-cart { padding: 20px 20px 20px; border-radius: 24px 24px 0 0; }
+    .cart-row { flex-direction: row; align-items: center; text-align: left; gap: 15px; padding: 20px; }
+    /* .cart-status, .progress-track { display: none; }  <-- REMOVIDO para mostrar a barra */
+    .app-cart { border-radius: 16px 16px 0 0; }
     .btn-finish { max-width: 100%; }
     .logo { height: 60px; }
     

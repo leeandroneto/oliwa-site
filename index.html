@@ -56,7 +56,7 @@
                     <span id="headerCartBadge" class="badge" style="display:none">0</span>
                 </button>
                 <a href="https://wa.me/5519996511995" class="btn-header" target="_blank">
-                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 1 0 7.855 13.6c1.467 0 2.833-.404 4.022-1.096l4.423 1.16-1.17-4.296A7.839 7.839 0 0 0 13.601 2.327zM7.994 14.561a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 1 1 5.58 3.094zm3.686-4.929c-.202-.101-1.196-.59-1.381-.657-.185-.067-.32-.101-.454.101-.134.202-.521.656-.639.79-.118.135-.235.151-.437.051-.202-.101-.853-.315-1.624-1.002-.605-.539-1.013-1.205-1.131-1.407-.118-.202-.013-.311.088-.412.091-.091.202-.236.303-.353.101-.118.135-.202.202-.336.067-.135.034-.252-.017-.353-.051-.101-.454-1.094-.622-1.498-.164-.395-.33-.341-.454-.347h-.387c-.135 0-.353.051-.538.252-.185.202-.706.69-.706 1.682 0 .992.723 1.951.824 2.085.101.135 1.421 2.17 3.443 3.043.48.207.854.331 1.145.423.48.152.917.13 1.265.078.387-.057 1.196-.488 1.364-.959.168-.471.168-.875.118-.959-.051-.084-.185-.135-.387-.236z"/></svg>
+                    <svg width="20" height="20" fill="currentColor" stroke="none" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                     <span class="btn-header-text">Falar com Representante</span>
                 </a>
             </div>
@@ -166,9 +166,9 @@
                 <div class="cart-data">
                     <span class="cart-status" id="statusText" style="color: #E65100;">Faltam 5 caixas</span>
                     <div class="cart-price" id="totalDisplay">R$ 0,00</div>
-                    <small style="color: #666;"><span id="cxCount">0</span> cxs (<span id="kgCount">0</span>kg)</small>
+                    <small style="color: #666;"><span id="cxCount">0</span> <span id="cxUnit">caixas</span> (<span id="kgCount">0</span>kg)</small>
                 </div>
-                <button class="btn-finish locked" id="btnFinish" onclick="tryCheckout()">🔒 Mínimo 5 cxs</button>
+                <button class="btn-finish locked" id="btnFinish" onclick="tryCheckout()">Mínimo 5 caixas</button>
             </div>
         </div>
     </div>
@@ -188,7 +188,7 @@
             </div>
 
             <button id="btnCartConfirm" onclick="goToCheckout()" class="btn-modal primary">
-                Confirmar e Endereço ➡️
+                Confirmar e Endereço
             </button>
         </div>
     </div>
@@ -241,7 +241,7 @@
             </div>
 
             <button onclick="goToDelivery()" class="btn-modal primary" style="margin-top:10px;">
-                Continuar para Entrega ➡️
+                Continuar para Entrega
             </button>
         </div>
     </div>
@@ -272,10 +272,10 @@
 
             <div style="display:flex; gap:10px; margin-top:20px;">
                 <button onclick="backToData()" class="btn-modal secondary" style="flex:1;">
-                    ⬅️ Voltar
+                    Voltar
                 </button>
                 <button onclick="sendWhatsapp()" class="btn-modal whatsapp" style="flex:2;">
-                    Enviar Pedido 🚀
+                    Enviar Pedido
                 </button>
             </div>
         </div>
