@@ -111,26 +111,33 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
 /* --- APP CART BAR --- */
 .app-cart {
     position: fixed; bottom: 0; left: 0; width: 100%;
-    background: var(--white); box-shadow: 0 -5px 40px rgba(0,0,0,0.15);
-    border-radius: 24px 24px 0 0; padding: 20px 20px 30px; z-index: 1000;
+    background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.08); border-top: 1px solid rgba(0,0,0,0.05);
+    border-radius: 20px 20px 0 0; padding: 15px 20px 25px; z-index: 1000;
     transform: translateY(120%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .app-cart::before {
     content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-    width: 40px; height: 5px; background: #E0E0E0; border-radius: 5px;
+    width: 50px; height: 5px; background: #E0E0E0; border-radius: 10px;
 }
 .app-cart.active { transform: translateY(0); }
 .progress-track { background: #EEE; height: 8px; border-radius: 4px; margin-bottom: 15px; overflow: hidden; }
 .progress-fill { background: var(--accent); height: 100%; width: 0%; transition: 0.5s; }
 .cart-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .cart-status { font-size: 0.85rem; font-weight: bold; margin-bottom: 2px; display: block; }
-.cart-price { font-size: 1.6rem; font-weight: 800; color: var(--primary); line-height: 1; }
+.cart-price { font-size: 1.4rem; font-weight: 800; color: var(--primary); line-height: 1; letter-spacing: -0.5px; }
 .btn-finish { 
-    flex: 1; max-width: 400px; padding: 16px; border-radius: 14px; border: none; 
-    font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
+    flex: 1; max-width: 400px; padding: 14px 20px; border-radius: 12px; border: none; 
+    font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; 
+    transition: transform 0.1s, box-shadow 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
 }
-.btn-finish.locked { background: #F0F0F0; color: #AAA; cursor: not-allowed; }
-.btn-finish.active { background: var(--whatsapp); color: white; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); animation: pulse 2s infinite; }
+.btn-finish:active { transform: scale(0.96); }
+.btn-finish.locked { background: #F5F5F5; color: #BBB; cursor: not-allowed; box-shadow: none; }
+.btn-finish.active { 
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
+    color: white; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); 
+}
 @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);} 70% {box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);} 100% {box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);} }
 
 /* --- MODAL FORMULÁRIO (Novo com Grid) --- */
@@ -140,11 +147,12 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
     align-items: center; justify-content: center; backdrop-filter: blur(4px);
 }
 .modal-box {
-    background: white; width: 95%; max-width: 500px; padding: 30px;
-    border-radius: 20px; position: relative; animation: slideIn 0.3s;
-    max-height: 90vh; overflow-y: auto;
+    background: white; width: 100%; max-width: 480px; padding: 30px;
+    border-radius: 24px; position: relative; animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
 }
-@keyframes slideIn { from {transform: translateY(30px); opacity:0} to {transform: translateY(0); opacity:1} }
+@keyframes slideIn { from {transform: translateY(50px); opacity:0} to {transform: translateY(0); opacity:1} }
+@keyframes slideUpMobile { from {transform: translateY(100%);} to {transform: translateY(0);} }
 
 .modal-header h3 { color: var(--primary); font-family: 'Fredoka', sans-serif; margin-bottom: 5px; font-size: 1.4rem; }
 .modal-header p { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
@@ -154,9 +162,10 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
 .input-group.full { grid-column: span 2; }
 .input-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; color: #555; text-transform: uppercase; }
 .input-field { 
-    width: 100%; padding: 12px; border: 2px solid #EEE; border-radius: 8px; font-size: 1rem; outline: none; transition: 0.3s; background: #FFF;
+    width: 100%; padding: 14px; border: 2px solid transparent; border-radius: 12px; 
+    font-size: 1rem; outline: none; transition: 0.2s; background: #F3F4F6; color: #333;
 }
-.input-field:focus { border-color: var(--accent); }
+.input-field:focus { border-color: var(--accent); background: #FFF; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 .input-field.input-error { border-color: #D32F2F; background: #FFEBEE; }
 .input-error-msg { color: #D32F2F; font-size: 0.75rem; margin-top: 4px; display: none; }
 .input-field:read-only { background: #F9F9F9; color: #777; border-color: #EEE; cursor: not-allowed; }
@@ -169,19 +178,20 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
 .btn-close-modal:hover { color: var(--primary); }
 
 .btn-modal {
-    width: 100%; padding: 16px; border-radius: 12px; border: none; 
-    font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.2s;
+    width: 100%; padding: 16px; border-radius: 14px; border: none; 
+    font-weight: 700; font-size: 1.05rem; cursor: pointer; transition: transform 0.1s, opacity 0.2s;
     display: flex; align-items: center; justify-content: center; gap: 8px;
 }
+.btn-modal:active { transform: scale(0.98); }
 .btn-modal.primary { background: var(--primary); color: white; }
 .btn-modal.whatsapp { background: var(--whatsapp); color: white; }
 .btn-modal.secondary { background: #EEE; color: #555; }
-.btn-modal:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-modal:hover { opacity: 0.95; }
 
 /* Estilos dinâmicos do Carrinho (JS) */
-.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
 .cart-item-left { display: flex; align-items: center; gap: 10px; }
-.cart-item-img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
+.cart-item-img { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; background: #f0f0f0; }
 .cart-item-info { display: flex; flex-direction: column; }
 .cart-item-title { font-weight: bold; font-size: 0.9rem; }
 .cart-item-price { font-size: 0.8rem; color: #666; }
@@ -196,10 +206,19 @@ footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem;
     .factory-section { flex-direction: column; text-align: center; }
     .cart-row { flex-direction: row; align-items: center; text-align: left; gap: 15px; }
     .cart-status, .progress-track { display: none; } /* Remove redundância no mobile */
-    .app-cart { padding: 25px 20px 20px; }
+    .app-cart { padding: 20px 20px 20px; border-radius: 24px 24px 0 0; }
     .btn-finish { max-width: 100%; }
     .logo { height: 60px; }
     
+    /* Modal estilo Bottom Sheet no Mobile */
+    .modal-box {
+        position: absolute; bottom: 0; left: 0; width: 100%; max-width: 100%;
+        border-radius: 24px 24px 0 0; padding: 25px;
+        animation: slideUpMobile 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        max-height: 90vh;
+    }
+    .modal-overlay { align-items: flex-end; } /* Alinha no fundo */
+
     /* Ajuste Header Mobile */
     .btn-header-text { display: none; }
     .btn-header { padding: 10px; border-radius: 50%; }
