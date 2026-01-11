@@ -396,6 +396,12 @@ function sendWhatsapp() {
         // Abre o WhatsApp
         window.open(`https://wa.me/${FONE_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
         
+        // Limpa o carrinho e localStorage
+        cart = {};
+        updateCart(); // Atualiza a barra inferior
+        localStorage.removeItem('oliwa_cart'); // Remove do armazenamento
+        document.querySelectorAll('.qty-val').forEach(input => input.value = 0); // Zera os inputs
+
         // Restaura o botão e fecha o modal
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -405,6 +411,13 @@ function sendWhatsapp() {
         console.error("Erro ao salvar:", err);
         // Mesmo se a planilha falhar, abrimos o WhatsApp para não perder a venda
         window.open(`https://wa.me/${FONE_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+        
+        // Limpa o carrinho também no caso de erro (fallback)
+        cart = {};
+        updateCart();
+        localStorage.removeItem('oliwa_cart');
+        document.querySelectorAll('.qty-val').forEach(input => input.value = 0);
+
         btn.innerHTML = originalText;
         btn.disabled = false;
     });
