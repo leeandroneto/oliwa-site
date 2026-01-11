@@ -26,7 +26,6 @@ produtos.forEach(p => {
         <div class="p-img"><img src="imagens/${p.img}" alt="${p.nome}" loading="lazy" width="400" height="300" onerror="this.src='https://placehold.co/400x300?text=${p.nome.replace(' ', '+')}'"></div>
         <div class="p-info">
             <div class="p-title">${p.nome}</div>
-            <div class="p-desc">${p.desc}</div>
             <div class="qty-box">
                 <button class="btn-qty" onclick="changeQty(${p.id}, -1)">-</button>
                 <input class="qty-val" id="qty-${p.id}" value="${cart[p.id] || 0}" readonly>
