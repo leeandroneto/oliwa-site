@@ -549,6 +549,9 @@ function sendTastingRequest() {
         body: JSON.stringify(tastingData)
     })
     .then(() => {
+        // Pixel Event: Lead (Solicitação de Degustação)
+        if(typeof fbq !== 'undefined') fbq('track', 'Lead');
+
         alert("Solicitação enviada com sucesso! Entraremos em contato.");
         closeDelivery(); // Fecha o modal de entrega agora
         btn.innerHTML = originalText;
