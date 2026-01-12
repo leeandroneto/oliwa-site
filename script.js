@@ -1,12 +1,12 @@
 // --- DADOS ---
 const produtos = [
-    { id: 1, nome: "Bambole Ninho", img: "bambole-ninho.webp" },
-    { id: 2, nome: "Casadinho Coco", img: "casadinho-coco.webp" },
-    { id: 3, nome: "Casadinho Nata", img: "casadinho-nata.webp" },
+    { id: 1, nome: "Bambolê de Ninho", img: "bambole-ninho.webp" },
+    { id: 2, nome: "Casadinho de Coco", img: "casadinho-coco.webp" },
+    { id: 3, nome: "Casadinho de Nata", img: "casadinho-nata.webp" },
     { id: 4, nome: "Flocos", img: "flocos.webp" },
-    { id: 5, nome: "Florzinha Leite Condensado", img: "florzinha-leite-condensado.webp" },
-    { id: 6, nome: "Florzinha Leite Condensado Recheada", img: "florzinha-leite-condensado-recheada.webp" },
-    { id: 7, nome: "Rosquinha Nata", img: "rosquinha-nata.webp" }
+    { id: 5, nome: "Florzinha de Leite Condensado", img: "florzinha-leite-condensado.webp" },
+    { id: 6, nome: "Florzinha de Leite Condensado Recheada", img: "florzinha-leite-condensado-recheada.webp" },
+    { id: 7, nome: "Rosquinha de Nata", img: "rosquinha-nata.webp" }
 ];
 
 const MINIMO = 5; 
@@ -37,6 +37,9 @@ updateCart();
 
 // LÓGICA DO CARRINHO
 function changeQty(id, delta) {
+    // UX: Vibração tátil (Haptic Feedback) para dispositivos móveis
+    if (navigator.vibrate) navigator.vibrate(50);
+
     const input = document.getElementById(`qty-${id}`);
     let val = parseInt(input.value) + delta;
     if (val < 0) val = 0;
@@ -69,6 +72,11 @@ function updateCart() {
     const badge = document.getElementById('headerCartBadge');
 
     if (total > 0) bar.classList.add('active'); else bar.classList.remove('active');
+    
+    // UX: Animação de "Pulso" na barra para chamar atenção quando atualiza
+    bar.classList.remove('pulse');
+    void bar.offsetWidth; // Trigger reflow para reiniciar animação
+    bar.classList.add('pulse');
     
     document.getElementById('cxCount').innerText = total;
     document.getElementById('kgCount').innerText = total * 2;
@@ -162,7 +170,7 @@ function renderCartItems() {
         btnConfirm.innerHTML = `Mínimo ${MINIMO} caixas`;
     } else {
         btnConfirm.style.opacity = '1';
-        btnConfirm.innerHTML = `Confirmar e Endereço`;
+        btnConfirm.innerHTML = `Confirmar e Avançar`;
     }
 }
 
@@ -339,7 +347,7 @@ function sendWhatsapp() {
     msg += `📅 Data: *${dataEntrega}*\n`;
     msg += `⏰ Período: ${periodo}\n`;
     msg += `----------------------------------\n`;
-    msg += `� *RESUMO DO PEDIDO*\n\n`;
+    msg += `🛒 *RESUMO DO PEDIDO*\n\n`;
 
     let totalBoxes = 0;
     for (let id in cart) {
