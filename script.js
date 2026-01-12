@@ -206,6 +206,13 @@ function mascaraCNPJ(t) {
     t.value = v;
 }
 
+function mascaraFone(t) {
+    let v = t.value.replace(/\D/g,"");
+    v = v.replace(/^(\d{2})(\d)/g,"($1) $2");
+    v = v.replace(/(\d)(\d{4})$/,"$1-$2");
+    t.value = v;
+}
+
 function buscarCep(cep) {
     cep = cep.replace(/\D/g, '');
     if(cep.length === 8) {
@@ -249,11 +256,12 @@ function goToDelivery() {
     // 1. Validação Básica
     const resp = document.getElementById('respName').value;
     const shop = document.getElementById('shopName').value;
+    const phone = document.getElementById('clientPhone').value;
     const rua = document.getElementById('rua').value;
     const num = document.getElementById('numero').value;
 
-    if (!resp || !shop || !rua || !num) {
-        alert('Preencha os dados obrigatórios e o endereço.');
+    if (!resp || !shop || !phone || !rua || !num) {
+        alert('Preencha os dados obrigatórios (Nome, Loja, WhatsApp e Endereço).');
         return;
     }
 
@@ -322,6 +330,7 @@ function sendWhatsapp() {
     // Coleta dados do Modal 1
     const resp = document.getElementById('respName').value;
     const shop = document.getElementById('shopName').value;
+    const phone = document.getElementById('clientPhone').value;
     const cnpj = document.getElementById('cnpj').value || "Não informado";
     const rua = document.getElementById('rua').value;
     const num = document.getElementById('numero').value;
@@ -337,7 +346,8 @@ function sendWhatsapp() {
     msg += `📋 *DADOS DO CLIENTE*\n`;
     msg += `👤 Resp: *${resp}*\n`;
     msg += `🏪 Loja: *${shop}*\n`;
-    msg += `🔢 CNPJ: ${cnpj}\n`;
+    msg += `📱 WhatsApp: ${phone}\n`;
+    msg += ` CNPJ: ${cnpj}\n`;
     msg += `📍 *Endereço de Entrega:*\n`;
     msg += `${rua}, ${num}\n`;
     msg += `${bairro} - ${cidade}\n`;
@@ -366,7 +376,7 @@ function sendWhatsapp() {
     // Prepara o objeto para salvar em Planilha/CRM futuramente
     const orderData = {
         data: new Date().toISOString(),
-        cliente: { nome: resp, loja: shop, cnpj: cnpj, telefone: FONE_WHATSAPP },
+        cliente: { nome: resp, loja: shop, cnpj: cnpj, telefone: phone },
         endereco: { rua, num, bairro, cidade, cep, data_entrega: dataEntrega, periodo: periodo },
         pedido: [],
         total_caixas: totalBoxes,
@@ -427,6 +437,101 @@ function sendWhatsapp() {
     });
 }
 
+// --- LÓGICA DE DEGUSTAÇÃO ---
+function buscarCepTasting(cep) {
+    cep = cep.replace(/\D/g, '');
+    if(cep.length === 8) {
+        document.getElementById('tastRua').value = "...";
+        document.getElementById('tastBairro').value = "...";
+        document.getElementById('tastCity').value = "...";
+
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(res => res.json())
+        .then(data => {
+            if(!data.erro) {
+                document.getElementById('tastRua').value = data.logradouro;
+                document.getElementById('tastBairro').value = data.bairro;
+                document.getElementById('tastCity').value = `${data.localidade} - ${data.uf}`;
+                document.getElementById('tastNum').focus();
+            } else {
+                alert("CEP não encontrado.");
+                document.getElementById('tastRua').value = "";
+                document.getElementById('tastRua').readOnly = false;
+                document.getElementById('tastBairro').value = "";
+                document.getElementById('tastBairro').readOnly = false;
+                document.getElementById('tastCity').value = "";
+                document.getElementById('tastCity').readOnly = false;
+            }
+        })
+        .catch(() => alert("Erro ao buscar CEP."));
+    }
+}
+
+function openTastingModal() {
+    document.getElementById('tastingModal').style.display = 'flex';
+}
+function closeTastingModal() {
+    document.getElementById('tastingModal').style.display = 'none';
+}
+
+function sendTastingRequest() {
+    const nome = document.getElementById('tastName').value;
+    const loja = document.getElementById('tastShop').value;
+    const fone = document.getElementById('tastPhone').value;
+    const cnpj = document.getElementById('tastCnpj').value;
+    const cep = document.getElementById('tastCep').value;
+    const rua = document.getElementById('tastRua').value;
+    const num = document.getElementById('tastNum').value;
+    const bairro = document.getElementById('tastBairro').value;
+    const cidade = document.getElementById('tastCity').value;
+
+    if(!nome || !loja || !fone || !rua || !num || !cidade) {
+        alert("Por favor, preencha os campos obrigatórios (Nome, Loja, WhatsApp e Endereço).");
+        return;
+    }
+
+    // Monta objeto compatível com a planilha existente
+    // Usamos o campo 'pedido' para indicar que é uma degustação
+    const tastingData = {
+        data: new Date().toISOString(),
+        status: "DEGUSTACAO", // Campo extra para facilitar filtro se o script suportar
+        cliente: { nome: nome, loja: loja, cnpj: cnpj || "Não informado", telefone: fone },
+        endereco: { rua: rua, num: num, bairro: bairro, cidade: cidade, cep: cep, data_entrega: "A COMBINAR", periodo: "-" },
+        pedido: [{ produto: ">>> SOLICITAÇÃO DE DEGUSTAÇÃO <<<", qtd: 1 }],
+        total_caixas: 0,
+        valor_total: 0
+    };
+
+    const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwmb4WkU8igBDN0VwpGtW7plyJCO3GIh0Brpj6FJ41W5qZMnpq9IbnuPKlI1JU0M8vR/exec';
+    
+    const btn = document.querySelector('button[onclick="sendTastingRequest()"]');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "Enviando...";
+    btn.disabled = true;
+
+    fetch(WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tastingData)
+    })
+    .then(() => {
+        alert("Solicitação enviada com sucesso! Entraremos em contato.");
+        closeTastingModal();
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        
+        // Opcional: Enviar msg no Zap também para garantir
+        const msg = `Olá, sou ${nome} da ${loja} (${cidade}) e gostaria de solicitar uma visita de degustação.`;
+        window.open(`https://wa.me/${FONE_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    })
+    .catch(() => {
+        alert("Erro ao enviar. Tente pelo WhatsApp.");
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+
 document.getElementById('cartModal').addEventListener('click', (e) => {
     if(e.target.id === 'cartModal') closeCart();
 });
@@ -435,6 +540,9 @@ document.getElementById('checkoutModal').addEventListener('click', (e) => {
 });
 document.getElementById('deliveryModal').addEventListener('click', (e) => {
     if(e.target.id === 'deliveryModal') closeDelivery();
+});
+document.getElementById('tastingModal').addEventListener('click', (e) => {
+    if(e.target.id === 'tastingModal') closeTastingModal();
 });
 
 // --- GESTO DE DESLIZAR PARA FECHAR (SWIPE DOWN) ---

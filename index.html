@@ -141,6 +141,19 @@
         </div>
     </section>
 
+    <!-- NOVA SEÇÃO: DEGUSTAÇÃO (Logo após o catálogo para recuperar quem não comprou) -->
+    <section class="section-padding tasting-section">
+        <div class="container">
+            <div class="tasting-content">
+                <h3>🍪 Quer provar antes de comprar?</h3>
+                <p>Sabemos que qualidade é tudo. Se você tem um comércio em nossa rota, agende uma visita técnica e levemos uma <strong>degustação gratuita</strong> para você conhecer.</p>
+                <button onclick="openTastingModal()" class="btn-tasting">
+                    Solicitar Visita com Amostras
+                </button>
+            </div>
+        </div>
+    </section>
+
     <section class="section-padding logistics">
         <div class="container">
             <div style="text-align: center; margin-bottom: 40px;">
@@ -246,6 +259,10 @@
                     <input type="text" id="shopName" name="org" autocomplete="organization" class="input-field" placeholder="Ex: Padaria Central">
                 </div>
                 <div class="input-group full">
+                    <label>WhatsApp de Contato</label>
+                    <input type="tel" id="clientPhone" name="tel" autocomplete="tel" class="input-field" placeholder="(19) 99999-9999" maxlength="15" oninput="mascaraFone(this)">
+                </div>
+                <div class="input-group full">
                     <label>CNPJ (Opcional)</label>
                     <input type="tel" id="cnpj" name="cnpj" autocomplete="off" class="input-field" placeholder="00.000.000/0000-00" maxlength="18" oninput="mascaraCNPJ(this)">
                 </div>
@@ -312,6 +329,62 @@
                     Enviar Pedido
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- TERCEIRO MODAL: DEGUSTAÇÃO -->
+    <div class="modal-overlay" id="tastingModal">
+        <div class="modal-box">
+            <button onclick="closeTastingModal()" class="btn-close-modal">&times;</button>
+            
+            <div class="modal-header">
+                <h3>Solicitar Degustação 🍪</h3>
+                <p>Receba uma visita técnica gratuita.</p>
+            </div>
+
+            <div class="form-grid">
+                <div class="input-group full">
+                    <label>Seu Nome</label>
+                    <input type="text" id="tastName" class="input-field" placeholder="Ex: Maria">
+                </div>
+                <div class="input-group full">
+                    <label>Nome do Comércio</label>
+                    <input type="text" id="tastShop" class="input-field" placeholder="Ex: Padaria da Esquina">
+                </div>
+                <div class="input-group">
+                    <label>CNPJ (Opcional)</label>
+                    <input type="tel" id="tastCnpj" class="input-field" placeholder="00.000.000/0000-00" maxlength="18" oninput="mascaraCNPJ(this)">
+                </div>
+                <div class="input-group">
+                    <label>WhatsApp</label>
+                    <input type="tel" id="tastPhone" class="input-field" placeholder="(19) 99999-9999" maxlength="15" oninput="mascaraFone(this)">
+                </div>
+                
+                <div class="input-group">
+                    <label>CEP</label>
+                    <input type="tel" id="tastCep" class="input-field" placeholder="00000-000" maxlength="9" oninput="mascaraCep(this)" onblur="buscarCepTasting(this.value)">
+                </div>
+                <div class="input-group">
+                    <label>Número</label>
+                    <input type="tel" id="tastNum" class="input-field" placeholder="123">
+                </div>
+                <div class="input-group full">
+                    <label>Rua</label>
+                    <input type="text" id="tastRua" class="input-field" placeholder="..." readonly>
+                </div>
+                <div class="input-group">
+                    <label>Bairro</label>
+                    <input type="text" id="tastBairro" class="input-field" placeholder="..." readonly>
+                </div>
+                <div class="input-group">
+                    <label>Cidade</label>
+                    <input type="text" id="tastCity" class="input-field" placeholder="..." readonly>
+                </div>
+            </div>
+
+            <button onclick="sendTastingRequest()" class="btn-modal primary" style="margin-top:10px;">
+                Solicitar Visita
+            </button>
         </div>
     </div>
 
