@@ -32,6 +32,9 @@ produtos.forEach(p => {
     grid.appendChild(el);
 });
 
+// Pixel: Dispara ViewContent ao carregar a lista de produtos (já que é uma One Page)
+if(typeof fbq !== 'undefined') fbq('track', 'ViewContent');
+
 // Atualiza a barra visualmente ao carregar a página
 updateCart();
 
@@ -422,7 +425,7 @@ function sendWhatsapp() {
             // Envia também os IDs dos produtos para inteligência do Pixel
             const content_ids = Object.keys(cart);
             fbq('track', 'Purchase', { 
-                value: orderData.valor_total, 
+                value: parseFloat(orderData.valor_total).toFixed(2), 
                 currency: 'BRL',
                 content_ids: content_ids,
                 content_type: 'product',
