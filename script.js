@@ -186,7 +186,17 @@ function goToCheckout() {
     }
 
     document.getElementById('checkoutModal').style.display = 'flex';
-    if(typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+    
+    // Pixel: Envia valor estimado já no início do checkout para otimizar público
+    if(typeof fbq !== 'undefined') {
+        fbq('track', 'InitiateCheckout', {
+            value: total * PRECO,
+            currency: 'BRL',
+            num_items: total,
+            content_ids: Object.keys(cart),
+            content_type: 'product'
+        });
+    }
 }
 
 function closeModal() { document.getElementById('checkoutModal').style.display = 'none'; }
@@ -415,7 +425,8 @@ function sendWhatsapp() {
                 value: orderData.valor_total, 
                 currency: 'BRL',
                 content_ids: content_ids,
-                content_type: 'product'
+                content_type: 'product',
+                num_items: orderData.total_caixas // Importante para relatórios
             });
         }
         
