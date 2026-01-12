@@ -11,7 +11,7 @@
 
 /* --- RESET --- */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 140px; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; }
 input, button { font-family: inherit; }
@@ -114,7 +114,7 @@ header { background: var(--white); padding: 15px 0; position: sticky; top: 0; z-
 .faq-item p { color: #666; font-size: 0.95rem; line-height: 1.5; }
 
 /* --- FOOTER --- */
-footer { background: #2D1B18; color: white; padding: 60px 0; font-size: 0.95rem; text-align: center; }
+footer { background: #2D1B18; color: white; padding: 60px 0 160px; font-size: 0.95rem; text-align: center; }
 .footer-logo { font-family: 'Fredoka', sans-serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 20px; display: block;}
 .footer-info p { margin-bottom: 10px; opacity: 0.8; }
 .copy { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; opacity: 0.5; }
