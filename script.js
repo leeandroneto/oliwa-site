@@ -252,6 +252,44 @@ const ROTA_DIAS = {
     'Paulínia': 5, 'Campinas': 5        // Sexta (5)
 };
 
+// Função auxiliar para preencher as datas (Reutilizável)
+function fillDeliveryDates(cidadeFull) {
+    let diaRota = null;
+    for (let cidadeKey in ROTA_DIAS) {
+        if (cidadeFull.includes(cidadeKey)) {
+            diaRota = ROTA_DIAS[cidadeKey];
+            break;
+        }
+    }
+
+    const selectDate = document.getElementById('deliveryDate');
+    selectDate.innerHTML = ""; 
+    const regionDisplay = document.getElementById('regionDisplay');
+
+    if (diaRota !== null) {
+        regionDisplay.innerText = cidadeFull.split('-')[0].trim();
+        let count = 0;
+        let checkDate = new Date();
+        while(count < 4) {
+            checkDate.setDate(checkDate.getDate() + 1);
+            if (checkDate.getDay() === diaRota) {
+                const diaStr = checkDate.toLocaleDateString('pt-BR');
+                const opt = document.createElement('option');
+                opt.value = diaStr;
+                opt.innerText = `${diaStr} (${getDiaSemana(diaRota)})`;
+                selectDate.appendChild(opt);
+                count++;
+            }
+        }
+    } else {
+        regionDisplay.innerText = "Outra Região";
+        const opt = document.createElement('option');
+        opt.value = "A combinar";
+        opt.innerText = "Data a combinar no WhatsApp";
+        selectDate.appendChild(opt);
+    }
+}
+
 function goToDelivery() {
     // 1. Validação Básica
     const resp = document.getElementById('respName').value;
@@ -266,54 +304,19 @@ function goToDelivery() {
     }
 
     // 2. Identificar Cidade e Dia da Rota
-    const cidadeFull = document.getElementById('cidade').value; // Ex: "Americana - SP"
-    let diaRota = null;
-    
-    // Procura substring da cidade na lista de rotas
-    for (let cidadeKey in ROTA_DIAS) {
-        if (cidadeFull.includes(cidadeKey)) {
-            diaRota = ROTA_DIAS[cidadeKey];
-            break;
-        }
-    }
-
-    // 3. Gerar Datas
-    const selectDate = document.getElementById('deliveryDate');
-    selectDate.innerHTML = ""; // Limpa opções anteriores
-    const regionDisplay = document.getElementById('regionDisplay');
-
-    if (diaRota !== null) {
-        regionDisplay.innerText = cidadeFull.split('-')[0].trim();
-        
-        // Gera as próximas 4 ocorrências desse dia da semana
-        let hoje = new Date();
-        let count = 0;
-        let checkDate = new Date();
-        
-        // Avança até achar 4 datas
-        while(count < 4) {
-            checkDate.setDate(checkDate.getDate() + 1); // Começa checando amanhã
-            if (checkDate.getDay() === diaRota) {
-                const diaStr = checkDate.toLocaleDateString('pt-BR');
-                const opt = document.createElement('option');
-                opt.value = diaStr;
-                opt.innerText = `${diaStr} (${getDiaSemana(diaRota)})`;
-                selectDate.appendChild(opt);
-                count++;
-            }
-        }
-    } else {
-        // Cidade fora da rota padrão
-        regionDisplay.innerText = "Outra Região";
-        const opt = document.createElement('option');
-        opt.value = "A combinar";
-        opt.innerText = "Data a combinar no WhatsApp";
-        selectDate.appendChild(opt);
-    }
+    fillDeliveryDates(document.getElementById('cidade').value);
 
     // 4. Troca de Modal
     document.getElementById('checkoutModal').style.display = 'none';
     document.getElementById('deliveryModal').style.display = 'flex';
+
+    // Garante que os botões estão configurados para PEDIDO NORMAL
+    const btnSend = document.getElementById('btnDeliverySend');
+    btnSend.setAttribute('onclick', 'sendWhatsapp()');
+    btnSend.innerHTML = 'Enviar Pedido';
+    
+    const btnBack = document.getElementById('btnDeliveryBack');
+    btnBack.setAttribute('onclick', 'backToData()');
 }
 
 function backToData() {
@@ -474,6 +477,38 @@ function closeTastingModal() {
     document.getElementById('tastingModal').style.display = 'none';
 }
 
+function goToTastingDelivery() {
+    const nome = document.getElementById('tastName').value;
+    const loja = document.getElementById('tastShop').value;
+    const fone = document.getElementById('tastPhone').value;
+    const rua = document.getElementById('tastRua').value;
+    const num = document.getElementById('tastNum').value;
+    const cidade = document.getElementById('tastCity').value;
+
+    if(!nome || !loja || !fone || !rua || !num || !cidade) {
+        alert("Por favor, preencha os campos obrigatórios (Nome, Loja, WhatsApp e Endereço).");
+        return;
+    }
+
+    fillDeliveryDates(cidade);
+
+    document.getElementById('tastingModal').style.display = 'none';
+    document.getElementById('deliveryModal').style.display = 'flex';
+
+    // Configura botões para DEGUSTAÇÃO
+    const btnSend = document.getElementById('btnDeliverySend');
+    btnSend.setAttribute('onclick', 'sendTastingRequest()');
+    btnSend.innerHTML = 'Solicitar Degustação';
+
+    const btnBack = document.getElementById('btnDeliveryBack');
+    btnBack.setAttribute('onclick', 'backToTasting()');
+}
+
+function backToTasting() {
+    document.getElementById('deliveryModal').style.display = 'none';
+    document.getElementById('tastingModal').style.display = 'flex';
+}
+
 function sendTastingRequest() {
     const nome = document.getElementById('tastName').value;
     const loja = document.getElementById('tastShop').value;
@@ -485,10 +520,8 @@ function sendTastingRequest() {
     const bairro = document.getElementById('tastBairro').value;
     const cidade = document.getElementById('tastCity').value;
 
-    if(!nome || !loja || !fone || !rua || !num || !cidade) {
-        alert("Por favor, preencha os campos obrigatórios (Nome, Loja, WhatsApp e Endereço).");
-        return;
-    }
+    const dataEntrega = document.getElementById('deliveryDate').value;
+    const periodo = document.getElementById('deliveryTime').value;
 
     // Monta objeto compatível com a planilha existente
     // Usamos o campo 'pedido' para indicar que é uma degustação
@@ -496,7 +529,7 @@ function sendTastingRequest() {
         data: new Date().toISOString(),
         status: "DEGUSTACAO", // Campo extra para facilitar filtro se o script suportar
         cliente: { nome: nome, loja: loja, cnpj: cnpj || "Não informado", telefone: fone },
-        endereco: { rua: rua, num: num, bairro: bairro, cidade: cidade, cep: cep, data_entrega: "A COMBINAR", periodo: "-" },
+        endereco: { rua: rua, num: num, bairro: bairro, cidade: cidade, cep: cep, data_entrega: dataEntrega, periodo: periodo },
         pedido: [{ produto: ">>> SOLICITAÇÃO DE DEGUSTAÇÃO <<<", qtd: 1 }],
         total_caixas: 0,
         valor_total: 0
@@ -504,7 +537,7 @@ function sendTastingRequest() {
 
     const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwmb4WkU8igBDN0VwpGtW7plyJCO3GIh0Brpj6FJ41W5qZMnpq9IbnuPKlI1JU0M8vR/exec';
     
-    const btn = document.querySelector('button[onclick="sendTastingRequest()"]');
+    const btn = document.getElementById('btnDeliverySend');
     const originalText = btn.innerHTML;
     btn.innerHTML = "Enviando...";
     btn.disabled = true;
@@ -517,12 +550,12 @@ function sendTastingRequest() {
     })
     .then(() => {
         alert("Solicitação enviada com sucesso! Entraremos em contato.");
-        closeTastingModal();
+        closeDelivery(); // Fecha o modal de entrega agora
         btn.innerHTML = originalText;
         btn.disabled = false;
         
         // Opcional: Enviar msg no Zap também para garantir
-        const msg = `Olá, sou ${nome} da ${loja} (${cidade}) e gostaria de solicitar uma visita de degustação.`;
+        const msg = `Olá, sou ${nome} da ${loja} (${cidade}) e gostaria de solicitar uma visita de degustação para *${dataEntrega}* (${periodo}).`;
         window.open(`https://wa.me/${FONE_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
     })
     .catch(() => {

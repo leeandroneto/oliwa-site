@@ -50,7 +50,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
 
-    <!-- Meta Pixel Code (Substitua SEU_ID_AQUI pelo ID do seu Pixel) -->
+    <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -60,11 +60,11 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    // fbq('init', 'SEU_ID_AQUI'); // <--- DESCOMENTE E COLOQUE SEU ID QUANDO TIVER
+    fbq('init', '1397710931861020');
     fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=DESATIVADO&ev=PageView&noscript=1"
+    src="https://www.facebook.com/tr?id=1397710931861020&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
 
@@ -322,10 +322,10 @@
             </div>
 
             <div style="display:flex; gap:10px; margin-top:20px;">
-                <button onclick="backToData()" class="btn-modal secondary" style="flex:1;">
+                <button id="btnDeliveryBack" onclick="backToData()" class="btn-modal secondary" style="flex:1;">
                     Voltar
                 </button>
-                <button onclick="sendWhatsapp()" class="btn-modal whatsapp" style="flex:2;">
+                <button id="btnDeliverySend" onclick="sendWhatsapp()" class="btn-modal whatsapp" style="flex:2;">
                     Enviar Pedido
                 </button>
             </div>
@@ -382,8 +382,8 @@
                 </div>
             </div>
 
-            <button onclick="sendTastingRequest()" class="btn-modal primary" style="margin-top:10px;">
-                Solicitar Visita
+            <button onclick="goToTastingDelivery()" class="btn-modal primary" style="margin-top:10px;">
+                Continuar para Agendamento
             </button>
         </div>
     </div>
