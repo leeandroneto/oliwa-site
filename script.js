@@ -408,7 +408,16 @@ function sendWhatsapp() {
     })
     .then(() => {
         // Dispara o Pixel de Compra se o Facebook Ads estiver ativo
-        if(typeof fbq !== 'undefined') fbq('track', 'Purchase', { value: orderData.valor_total, currency: 'BRL' });
+        if(typeof fbq !== 'undefined') {
+            // Envia também os IDs dos produtos para inteligência do Pixel
+            const content_ids = Object.keys(cart);
+            fbq('track', 'Purchase', { 
+                value: orderData.valor_total, 
+                currency: 'BRL',
+                content_ids: content_ids,
+                content_type: 'product'
+            });
+        }
         
         // Abre o WhatsApp
         window.open(`https://wa.me/${FONE_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
