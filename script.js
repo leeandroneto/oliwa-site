@@ -1,12 +1,12 @@
 // --- DADOS ---
 const produtos = [
-    { id: 1, nome: "Bambolê de Ninho", img: "bambole-ninho.webp" },
+    { id: 7, nome: "Rosquinha de Nata", img: "rosquinha-nata.webp" },
     { id: 2, nome: "Casadinho de Coco", img: "casadinho-coco.webp" },
     { id: 3, nome: "Casadinho de Nata", img: "casadinho-nata.webp" },
     { id: 4, nome: "Flocos", img: "flocos.webp" },
     { id: 5, nome: "Florzinha de Leite Condensado", img: "florzinha-leite-condensado.webp" },
     { id: 6, nome: "Florzinha de Leite Condensado Recheada", img: "florzinha-leite-condensado-recheada.webp" },
-    { id: 7, nome: "Rosquinha de Nata", img: "rosquinha-nata.webp" }
+    { id: 1, nome: "Bambolê de Ninho", img: "bambole-ninho.webp" }
 ];
 
 const MINIMO = 5; 

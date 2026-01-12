@@ -197,10 +197,10 @@
         <div class="container">
             <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
             <div class="cart-row">
-                <div class="cart-data">
+                <div class="cart-data" onclick="openCartFromHeader()">
                     <span class="cart-status" id="statusText" style="color: #E65100;">Faltam 5 caixas</span>
-                    <div class="cart-price" id="totalDisplay">R$ 0,00</div>
-                    <small style="color: #666;"><span id="cxCount">0</span> <span id="cxUnit">caixas</span> (<span id="kgCount">0</span>kg)</small>
+                    <div class="cart-price"><span id="totalDisplay">R$ 0,00</span> <span style="font-size: 0.9rem; vertical-align: middle; opacity: 0.4;">&#9650;</span></div>
+                    <small style="color: #666;"><span id="cxCount">0</span> <span id="cxUnit">caixas</span> (<span id="kgCount">0</span>kg) &bull; <span style="text-decoration: underline;">Ver itens</span></small>
                 </div>
                 <button class="btn-finish locked" id="btnFinish" onclick="tryCheckout()">Mínimo 5 caixas</button>
             </div>
